@@ -30,6 +30,20 @@ app.layout = html.Div([
         className="banner"
     ),
 
+    html.Div([
+        html.Div([
+            html.H4("Input"),
+            html.Img(src="assets\\ezgif.com-gif-maker.gif")
+        ], className="six columns"),
+
+        html.Div([
+            html.H4("Output"),
+            html.Img(src="assets\\ezgif.com-gif-maker (1).gif")
+        ], className="six columns")
+    ], className="row"),
+
+
+
     html.Label(
         "Model Training Results"
     ),
@@ -51,7 +65,7 @@ app.layout = html.Div([
         )
     )
 
-])
+], style={"background-color": "#dcdddf"})
 
 if __name__ == "__main__":
     app.run_server(debug=True)
