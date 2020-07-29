@@ -15,16 +15,20 @@ fig = dict(data=data, layout=layout)
 # print(alt1_data['Loss'])
 
 # Initialising the app
-app = dash.Dash()
+app = dash.Dash(__name__, update_title=None)
 
 # Container of div and html elements
 app.layout = html.Div([
 
     html.Div([
         html.H1('Supervised Causal Video Super-Resolution'),
-        html.Img(src="assets\\Monash-University-Logo.png")
+        html.Img(src="assets\\Monash-University-Logo.png"),
     ],
         className="banner"),
+    html.Div(
+        html.H2('Darren Flaks'),
+        className="banner"
+    ),
 
     html.Label(
         "Model Training Results"
