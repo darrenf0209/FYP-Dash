@@ -21,28 +21,50 @@ app = dash.Dash(__name__, update_title=None)
 app.layout = html.Div([
 
     html.Div([
-        html.H1('Supervised Causal Video Super-Resolution'),
-        html.Img(src="assets\\Monash-University-Logo.png"),
+        html.H1(
+            'Supervised Causal Video Super-Resolution',
+        ),
+        html.Img(
+            src="assets\\Monash-University-Logo.png"
+        ),
     ],
         className="banner"),
     html.Div(
         html.H2('Darren Flaks'),
-        className="banner"
+        className="banner",
+        style={
+            "text-align": "center"
+        },
     ),
 
     html.Div([
         html.Div([
-            html.H4("Input"),
-            html.Img(src="assets\\ezgif.com-gif-maker.gif")
-        ], className="six columns"),
+            html.H4(
+                "Input",
+            ),
+            html.Img(
+                src="assets\\ezgif.com-gif-maker.gif",
+            ),
+        ],
+            className="six columns",
+        ),
 
         html.Div([
-            html.H4("Output"),
-            html.Img(src="assets\\ezgif.com-gif-maker (1).gif")
-        ], className="six columns")
-    ], className="row"),
-
-
+            html.H4(
+                "Output",
+            ),
+            html.Img(
+                src="assets\\ezgif.com-gif-maker (1).gif",
+            ),
+        ],
+            className="six columns",
+            ),
+    ],
+        className="row",
+        style={
+            "text-align": "center"
+        },
+    ),
 
     html.Label(
         "Model Training Results"
@@ -51,21 +73,29 @@ app.layout = html.Div([
     html.Div(
         dcc.Dropdown(
             options=[
-                {'label': 'Control', 'value': 'Control'},
-                {'label': 'Null', 'value': 'Null'},
-                {'label': 'Alternative', 'value': 'Alt'}
-            ]
-        )
+                {
+                    'label': 'Control',
+                    'value': 'Control'
+                },
+                {
+                    'label': 'Null',
+                    'value': 'Null'
+                },
+                {
+                    'label': 'Alternative',
+                    'value': 'Alt'
+                },
+            ],
+        ),
     ),
 
     html.Div(
         dcc.Graph(
             id="Alt 1 Training",
-            figure=fig
-        )
-    )
-
-], style={"background-color": "#dcdddf"})
+            figure=fig,
+        ),
+    ),
+])
 
 if __name__ == "__main__":
     app.run_server(debug=True)
