@@ -44,6 +44,25 @@ app.layout = html.Div([
 
     html.Div([
         html.Div([
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
+        ],
+            className="eight columns offset-by-two",
+            style={
+                "text-align": "justify",
+                "text-justify": "inter-word"
+            },
+        ),
+    ],
+        className="row"
+    ),
+
+
+    html.Div([
+        html.H4('Visual Results of 2x Video Super-Resolution')
+    ]),
+
+    html.Div([
+        html.Div([
             "Video sequence",
         ],
             className="two columns offset-by-one",
@@ -60,13 +79,12 @@ app.layout = html.Div([
                 {'label': 'High Contrast', 'value': 'High Contrast'},
                 {'label': 'Low Contrast', 'value': 'Low Contrast'},
                 {'label': 'Vibrant Color', 'value': 'Vibrant Color'},
-                {'label': 'Black/White', 'value': 'Black/White'},
+                {'label': 'Black and White', 'value': 'Black and White'},
             ],
             value='Fast-moving',
             clearable=False,
             className="two columns",
         ),
-        html.Div(id='dd-video-sequence'),
     ],
         className="row",
         style={
@@ -76,6 +94,7 @@ app.layout = html.Div([
 
     html.Div([
         html.Div([
+            html.Div(id='dd-video-sequence'),
             html.H4(
                 "Input",
             ),
