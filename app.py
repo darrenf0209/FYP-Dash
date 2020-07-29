@@ -19,11 +19,16 @@ app = dash.Dash()
 
 # Container of div and html elements
 app.layout = html.Div([
-    html.Div(
-        html.H1(children='Supervised Causal Video Super-Resolution')
-    ),
 
-    html.Label("Model Training Results"),
+    html.Div([
+        html.H1('Supervised Causal Video Super-Resolution'),
+        html.Img(src="assets\\Monash-University-Logo.png")
+    ],
+        className="banner"),
+
+    html.Label(
+        "Model Training Results"
+    ),
 
     html.Div(
         dcc.Dropdown(
@@ -36,8 +41,10 @@ app.layout = html.Div([
     ),
 
     html.Div(
-        dcc.Graph(id="Alt 1 Training",
-                  figure=fig)
+        dcc.Graph(
+            id="Alt 1 Training",
+            figure=fig
+        )
     )
 
 ])
