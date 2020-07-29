@@ -29,8 +29,9 @@ app.layout = html.Div([
         ),
     ],
         className="banner"),
-    html.Div(
-        html.H2('Darren Flaks'),
+    html.Div([
+        html.H2('Darren Flaks')
+    ],
         className="banner",
         style={
             "text-align": "center"
@@ -38,12 +39,48 @@ app.layout = html.Div([
     ),
 
     html.Div([
+        html.H4('Project Synposis')
+    ], ),
+
+    html.Div([
+        html.Div([
+            "Video sequence",
+        ],
+            className="two columns offset-by-one",
+            style={
+                "padding-top": "0.5%",
+                "padding-left": "3%"
+            }
+        ),
+        dcc.Dropdown(
+            id='video-sequence-selector',
+            options=[
+                {'label': 'Fast-moving', 'value': 'Fast-moving'},
+                {'label': 'Slow-moving', 'value': 'Slow-moving'},
+                {'label': 'High Contrast', 'value': 'High Contrast'},
+                {'label': 'Low Contrast', 'value': 'Low Contrast'},
+                {'label': 'Vibrant Color', 'value': 'Vibrant Color'},
+                {'label': 'Black/White', 'value': 'Black/White'},
+            ],
+            value='Fast-moving',
+            clearable=False,
+            className="two columns",
+        ),
+        html.Div(id='dd-video-sequence'),
+    ],
+        className="row",
+        style={
+            "padding-top": "0.5%",
+            "padding-bottom": "0.5%"
+        }),
+
+    html.Div([
         html.Div([
             html.H4(
                 "Input",
             ),
             html.Img(
-                src="assets\\ezgif.com-gif-maker.gif",
+                src="assets/video_sequences/ezgif.com-gif-maker.gif",
             ),
         ],
             className="six columns",
@@ -54,11 +91,11 @@ app.layout = html.Div([
                 "Output",
             ),
             html.Img(
-                src="assets\\ezgif.com-gif-maker (1).gif",
+                src="assets/video_sequences/ezgif.com-gif-maker (1).gif",
             ),
         ],
             className="six columns",
-            ),
+        ),
     ],
         className="row",
         style={
@@ -66,26 +103,18 @@ app.layout = html.Div([
         },
     ),
 
-    html.Label(
-        "Model Training Results"
-    ),
+    html.Div([
+        html.H4("Model Training Results")
+    ], ),
 
     html.Div(
         dcc.Dropdown(
             options=[
-                {
-                    'label': 'Control',
-                    'value': 'Control'
-                },
-                {
-                    'label': 'Null',
-                    'value': 'Null'
-                },
-                {
-                    'label': 'Alternative',
-                    'value': 'Alt'
-                },
+                {'label': 'Control', 'value': 'Control'},
+                {'label': 'Null', 'value': 'Null'},
+                {'label': 'Alternative', 'value': 'Alt'},
             ],
+            multi=True,
         ),
     ),
 
@@ -96,6 +125,14 @@ app.layout = html.Div([
         ),
     ),
 ])
+
+
+@app.callback(
+    dash.dependencies.Output('dd-video-sequence', 'children'),
+    [dash.dependencies.Input('video-sequence-selector', 'value')])
+def updateVideo(value):
+    return "You have selected {}".format(value)
+
 
 if __name__ == "__main__":
     app.run_server(debug=True)
