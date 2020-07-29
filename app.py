@@ -1,8 +1,11 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+from dash.dependencies import Output, Input
 import plotly.graph_objs as go
 import pandas as pd
+import os
+
 
 alt1_data = pd.read_csv("data\\alternative_1_20200527.csv")
 alt1_graph = go.Scatter(x=alt1_data['Iteration'],
@@ -13,6 +16,14 @@ data = [alt1_graph]
 layout = dict(title="Alternative 1", showlegend=False)
 fig = dict(data=data, layout=layout)
 # print(alt1_data['Loss'])
+
+video_dir_lr = "assets\\video_sequences\\low_res"
+video_dir_hr = "assets\\video_sequences\\high_res"
+videos_lr = [os.path.splitext(vid)[0] for vid in os.listdir(video_dir_lr)]
+videos_hr = [os.path.splitext(vid)[0] for vid in os.listdir(video_dir_hr)]
+print(videos_lr)
+print(videos_hr)
+
 
 # Initialising the app
 app = dash.Dash(__name__, update_title=None)
@@ -44,7 +55,12 @@ app.layout = html.Div([
 
     html.Div([
         html.Div([
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the "
+            "industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and "
+            "scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap "
+            "into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the "
+            "release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing "
+            "software like Aldus PageMaker including versions of Lorem Ipsum "
         ],
             className="eight columns offset-by-two",
             style={
@@ -73,15 +89,16 @@ app.layout = html.Div([
         ),
         dcc.Dropdown(
             id='video-sequence-selector',
-            options=[
-                {'label': 'Fast-moving', 'value': 'Fast-moving'},
-                {'label': 'Slow-moving', 'value': 'Slow-moving'},
-                {'label': 'High Contrast', 'value': 'High Contrast'},
-                {'label': 'Low Contrast', 'value': 'Low Contrast'},
-                {'label': 'Vibrant Color', 'value': 'Vibrant Color'},
-                {'label': 'Black and White', 'value': 'Black and White'},
-            ],
-            value='Fast-moving',
+            options=[{'label': i, 'value': i} for i in videos_lr],
+            # options=[
+            #     {'label': 'Fast-moving', 'value': 'Fast-moving'},
+            #     {'label': 'Slow-moving', 'value': 'Slow-moving'},
+            #     {'label': 'High Contrast', 'value': 'High Contrast'},
+            #     {'label': 'Lots of Edges', 'value': 'Lots of Edges'},
+            #     {'label': 'Vibrant Color', 'value': 'Vibrant Color'},
+            #     {'label': 'Black and White', 'value': 'Black and White'},
+            # ],
+            value=videos_lr[0],
             clearable=False,
             className="two columns",
         ),
@@ -94,12 +111,13 @@ app.layout = html.Div([
 
     html.Div([
         html.Div([
-            html.Div(id='dd-video-sequence'),
+            # html.Div(id='dd-video-sequence'),
             html.H4(
                 "Input",
             ),
             html.Img(
-                src="assets/video_sequences/ezgif.com-gif-maker.gif",
+                id='video_lr'
+                # src="assets/video_sequences/ezgif.com-gif-maker.gif",
             ),
         ],
             className="six columns",
@@ -110,7 +128,8 @@ app.layout = html.Div([
                 "Output",
             ),
             html.Img(
-                src="assets/video_sequences/ezgif.com-gif-maker (1).gif",
+                id='video_hr'
+                # src="assets/video_sequences/ezgif.com-gif-maker (1).gif",
             ),
         ],
             className="six columns",
@@ -146,11 +165,14 @@ app.layout = html.Div([
 ])
 
 
-@app.callback(
-    dash.dependencies.Output('dd-video-sequence', 'children'),
-    [dash.dependencies.Input('video-sequence-selector', 'value')])
+@app.callback([
+    Output('video_lr', 'src'),
+    Output('video_hr', 'src')],
+    [Input('video-sequence-selector', 'value')])
 def updateVideo(value):
-    return "You have selected {}".format(value)
+    src_lr = os.path.join(video_dir_lr, value + '.png')
+    src_hr = os.path.join(video_dir_hr, value + '.png')
+    return src_lr, src_hr
 
 
 if __name__ == "__main__":
