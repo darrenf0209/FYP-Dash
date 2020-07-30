@@ -5,22 +5,22 @@ from dash.dependencies import Output, Input
 import plotly.graph_objs as go
 import pandas as pd
 import os
+import glob
+
+data_files = glob.glob("data\\*.csv")
+data_files = list(data_files)
 
 alt1_data = pd.read_csv("data\\alternative_1_20200527.csv")
-alt1_graph = go.Scatter(x=alt1_data['Iteration'],
-                        y=alt1_data['PSNR'],
-                        name="Alt1")
-
-data = [alt1_graph]
-layout = dict(title="Alternative 1", showlegend=False)
-fig = dict(data=data, layout=layout)
+null1_data = pd.read_csv("data\\null_1_20200517.csv")
+all_data = [alt1_data, null1_data]
 
 video_dir_lr = "assets\\video_sequences\\low_res"
 video_dir_hr = "assets\\video_sequences\\high_res"
 videos_lr = [os.path.splitext(vid)[0] for vid in os.listdir(video_dir_lr)]
 videos_hr = [os.path.splitext(vid)[0] for vid in os.listdir(video_dir_hr)]
-# print(videos_lr)
-# print(videos_hr)
+
+models = ['Alternative', 'Null']
+metrics = ['PSNR', 'Loss']
 
 # Initialising the app
 app = dash.Dash(__name__, update_title=None)
@@ -36,7 +36,6 @@ app.layout = html.Div([
             style={
                 "text-align": "left"
             },
-
         ),
         html.Img(
             src="assets/logos/Monash-University-Logo.png",
@@ -52,7 +51,7 @@ app.layout = html.Div([
         className="row",
         style={
             "background-color": "#dcdddf"
-        }
+        },
     ),
 
     html.Div([
@@ -68,8 +67,8 @@ app.layout = html.Div([
                 src="assets/logos/linked_in_logo.png",
                 className="one column",
                 style={
-                    "width": "2.5%",
-                    "height": "2.5%",
+                    "width": "auto",
+                    "height": "40px",
                     "margin-top": "1.25%",
                     "margin-right": "1%",
                 },
@@ -82,19 +81,20 @@ app.layout = html.Div([
                 src="assets/logos/github_logo.png",
                 className="one column",
                 style={
-                    "width": "2.5%",
-                    "height": "2.5%",
+                    "width": "auto",
+                    "height": "40px",
                     "margin-top": "1.25%",
                 },
             ),
         ],
-            href='https://github.com/darrenf0209'),
+            href='https://github.com/darrenf0209'
+        ),
         html.H4(
             "Supervisors: Dr. Titus Tang, Prof. Tom Drummond",
             className="six columns offset-by-two",
             style={
                 "text-align": "right",
-            }
+            },
         ),
     ],
         className="row",
@@ -193,31 +193,43 @@ app.layout = html.Div([
 
     html.Div([
         html.H4("Model Training Results")
-    ], ),
+    ],
+    ),
 
-    html.Div(
-        dcc.Dropdown(
-            options=[
-                {'label': 'Control', 'value': 'Control'},
-                {'label': 'Null', 'value': 'Null'},
-                {'label': 'Alternative', 'value': 'Alt'},
-            ],
-            multi=True,
-            className="ten columns offset-by-one",
+    html.Div([
+        html.H6("Model Select",
+                className="two columns offset-by-one"),
+        html.Div(
+            dcc.Dropdown(
+                id='model-selector',
+                options=[{'label': i, 'value': i} for i in models],
+                value='Alternative',
+                multi=True,
+                className="four columns",
+            ),
         ),
+        html.Div(
+            dcc.Dropdown(
+                id='metric-selector',
+                options=[{'label': i, 'value': i} for i in metrics],
+                value='PSNR',
+                className="two columns offset-by-one",
+            ),
+        ),
+    ],
         className="row"
     ),
 
     html.Div(
         dcc.Graph(
-            id="Alt 1 Training",
-            figure=fig,
+            id='training-results-scatter',
+            # id="Alt 1 Training",
+            # figure=fig,
             className="ten columns offset-by-one"
         ),
         className="row"
     ),
 ],
-    # style={"height": "100%"},
 )
 
 
@@ -225,10 +237,43 @@ app.layout = html.Div([
     Output('video_lr', 'src'),
     Output('video_hr', 'src')],
     [Input('video-sequence-selector', 'value')])
-def updateVideo(value):
+def update_video(value):
     src_lr = os.path.join(video_dir_lr, value + '.png')
     src_hr = os.path.join(video_dir_hr, value + '.png')
     return src_lr, src_hr
+
+
+@app.callback(
+    Output('training-results-scatter', 'figure'),
+    [Input('model-selector', 'value'),
+     Input('metric-selector', 'value')])
+def update_graph(model_choice, metric):
+    # choice = [model_choice]
+    # data_load = []
+    # for i in range(0, len(choice)):
+    #     print(choice[i])
+    #     if models.index(choice[i]) is not None:
+    #         index = models.index(choice[i])
+    #         # print(data_files[index])
+    #         # print(index, type(index))
+    #         df = pd.read_csv(data_files[index])
+            # print(df['Iterations'])
+            # data_load.append(all_data[index])
+
+    # print(data_load)
+    # print(models)
+    # print(index)
+    # data_select = all_data[index]
+    graph = go.Scatter(
+        x=alt1_data['Iteration'],
+        y=alt1_data[metric],
+        name="{}".format(model_choice)
+    )
+    data = [graph]
+    layout = dict(title="Alternative 1", showlegend=True)
+    fig = dict(data=data, layout=layout)
+    return fig
+
 
 
 if __name__ == "__main__":
