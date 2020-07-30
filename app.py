@@ -6,7 +6,6 @@ import plotly.graph_objs as go
 import pandas as pd
 import os
 
-
 alt1_data = pd.read_csv("data\\alternative_1_20200527.csv")
 alt1_graph = go.Scatter(x=alt1_data['Iteration'],
                         y=alt1_data['PSNR'],
@@ -15,15 +14,13 @@ alt1_graph = go.Scatter(x=alt1_data['Iteration'],
 data = [alt1_graph]
 layout = dict(title="Alternative 1", showlegend=False)
 fig = dict(data=data, layout=layout)
-# print(alt1_data['Loss'])
 
 video_dir_lr = "assets\\video_sequences\\low_res"
 video_dir_hr = "assets\\video_sequences\\high_res"
 videos_lr = [os.path.splitext(vid)[0] for vid in os.listdir(video_dir_lr)]
 videos_hr = [os.path.splitext(vid)[0] for vid in os.listdir(video_dir_hr)]
-print(videos_lr)
-print(videos_hr)
-
+# print(videos_lr)
+# print(videos_hr)
 
 # Initialising the app
 app = dash.Dash(__name__, update_title=None)
@@ -31,21 +28,53 @@ app = dash.Dash(__name__, update_title=None)
 # Container of div and html elements
 app.layout = html.Div([
 
+    # Banner
     html.Div([
-        html.H1(
-            'Supervised Causal Video Super-Resolution',
+        html.H3(
+            "Supervised Causal Video Super-Resolution",
+            className="six columns offset-by-one",
+            style={
+                "text-align": "left"
+            },
+
         ),
         html.Img(
-            src="assets\\Monash-University-Logo.png"
+            src="assets\\Monash-University-Logo.png",
+            className="six columns offset-by-three",
+            style={
+                "height": "50px",
+                "width": "auto",
+                "margin-top": "1%",
+
+                "margin-right": "2%"
+            },
         ),
     ],
-        className="banner"),
-    html.Div([
-        html.H2('Darren Flaks')
-    ],
-        className="banner",
+        className="row",
         style={
-            "text-align": "center"
+            "background-color": "#dcdddf"
+        }
+    ),
+
+    html.Div([
+        html.H4(
+            "Darren Flaks",
+            className="four columns offset-by-one",
+            style={
+                "text-align": "left"
+            }
+        ),
+        html.H4(
+            "Supervisors: Dr. Titus Tang, Prof. Tom Drummond",
+            className="five columns offset-by-two",
+            style={
+                "text-align": "right",
+            }
+        ),
+    ],
+        className="row",
+        style={
+            "background-color": "#dcdddf"
         },
     ),
 
@@ -72,7 +101,6 @@ app.layout = html.Div([
         className="row"
     ),
 
-
     html.Div([
         html.H4('Visual Results of 2x Video Super-Resolution')
     ]),
@@ -90,14 +118,6 @@ app.layout = html.Div([
         dcc.Dropdown(
             id='video-sequence-selector',
             options=[{'label': i, 'value': i} for i in videos_lr],
-            # options=[
-            #     {'label': 'Fast-moving', 'value': 'Fast-moving'},
-            #     {'label': 'Slow-moving', 'value': 'Slow-moving'},
-            #     {'label': 'High Contrast', 'value': 'High Contrast'},
-            #     {'label': 'Lots of Edges', 'value': 'Lots of Edges'},
-            #     {'label': 'Vibrant Color', 'value': 'Vibrant Color'},
-            #     {'label': 'Black and White', 'value': 'Black and White'},
-            # ],
             value=videos_lr[0],
             clearable=False,
             className="two columns",
@@ -111,13 +131,11 @@ app.layout = html.Div([
 
     html.Div([
         html.Div([
-            # html.Div(id='dd-video-sequence'),
             html.H4(
                 "Input",
             ),
             html.Img(
                 id='video_lr'
-                # src="assets/video_sequences/ezgif.com-gif-maker.gif",
             ),
         ],
             className="six columns",
@@ -129,7 +147,6 @@ app.layout = html.Div([
             ),
             html.Img(
                 id='video_hr'
-                # src="assets/video_sequences/ezgif.com-gif-maker (1).gif",
             ),
         ],
             className="six columns",
@@ -162,7 +179,9 @@ app.layout = html.Div([
             figure=fig,
         ),
     ),
-])
+],
+    # style={"height": "100%"},
+)
 
 
 @app.callback([
