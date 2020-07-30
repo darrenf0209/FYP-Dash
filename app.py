@@ -45,7 +45,6 @@ app.layout = html.Div([
                 "height": "50px",
                 "width": "auto",
                 "margin-top": "1%",
-
                 "margin-right": "2%"
             },
         ),
@@ -135,7 +134,11 @@ app.layout = html.Div([
                 "Input",
             ),
             html.Img(
-                id='video_lr'
+                id='video_lr',
+                style={
+                    "width": "100%",
+                    "height": "auto"
+                },
             ),
         ],
             className="six columns",
@@ -146,7 +149,11 @@ app.layout = html.Div([
                 "Output",
             ),
             html.Img(
-                id='video_hr'
+                id='video_hr',
+                style={
+                    "width": "100%",
+                    "height": "auto"
+                },
             ),
         ],
             className="six columns",
