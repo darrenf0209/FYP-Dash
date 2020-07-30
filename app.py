@@ -39,7 +39,7 @@ app.layout = html.Div([
 
         ),
         html.Img(
-            src="assets\\Monash-University-Logo.png",
+            src="assets/logos/Monash-University-Logo.png",
             className="two columns",
             style={
                 "height": "50px",
@@ -58,14 +58,40 @@ app.layout = html.Div([
     html.Div([
         html.H4(
             "Darren Flaks",
-            className="four columns offset-by-one",
+            className="two columns offset-by-one",
             style={
                 "text-align": "left"
             }
         ),
+        html.A([
+            html.Img(
+                src="assets/logos/linked_in_logo.png",
+                className="one column",
+                style={
+                    "width": "2.5%",
+                    "height": "2.5%",
+                    "margin-top": "1.25%",
+                    "margin-right": "1%",
+                },
+            ),
+        ],
+            href='https://www.linkedin.com/in/darrenflaks/'
+        ),
+        html.A([
+            html.Img(
+                src="assets/logos/github_logo.png",
+                className="one column",
+                style={
+                    "width": "2.5%",
+                    "height": "2.5%",
+                    "margin-top": "1.25%",
+                },
+            ),
+        ],
+            href='https://github.com/darrenf0209'),
         html.H4(
             "Supervisors: Dr. Titus Tang, Prof. Tom Drummond",
-            className="six columns",
+            className="six columns offset-by-two",
             style={
                 "text-align": "right",
             }
@@ -177,14 +203,18 @@ app.layout = html.Div([
                 {'label': 'Alternative', 'value': 'Alt'},
             ],
             multi=True,
+            className="ten columns offset-by-one",
         ),
+        className="row"
     ),
 
     html.Div(
         dcc.Graph(
             id="Alt 1 Training",
             figure=fig,
+            className="ten columns offset-by-one"
         ),
+        className="row"
     ),
 ],
     # style={"height": "100%"},
