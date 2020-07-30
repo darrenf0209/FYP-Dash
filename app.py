@@ -32,7 +32,7 @@ app.layout = html.Div([
     html.Div([
         html.H3(
             "Supervised Causal Video Super-Resolution",
-            className="six columns offset-by-one",
+            className="eight columns offset-by-one",
             style={
                 "text-align": "left"
             },
@@ -40,12 +40,12 @@ app.layout = html.Div([
         ),
         html.Img(
             src="assets\\Monash-University-Logo.png",
-            className="six columns offset-by-three",
+            className="two columns",
             style={
                 "height": "50px",
                 "width": "auto",
                 "margin-top": "1%",
-                "margin-right": "2%"
+                "text-align": "right"
             },
         ),
     ],
@@ -65,7 +65,7 @@ app.layout = html.Div([
         ),
         html.H4(
             "Supervisors: Dr. Titus Tang, Prof. Tom Drummond",
-            className="five columns offset-by-two",
+            className="six columns",
             style={
                 "text-align": "right",
             }
@@ -79,17 +79,17 @@ app.layout = html.Div([
 
     html.Div([
         html.H4('Project Synposis')
-    ], ),
+    ],
+    ),
 
     html.Div([
-        html.Div([
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the "
+        dcc.Markdown(
+            "Lorem Ipsum is simply dummy **text** of the printing and typesetting industry. Lorem Ipsum has been the "
             "industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and "
             "scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap "
             "into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the "
             "release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing "
-            "software like Aldus PageMaker including versions of Lorem Ipsum "
-        ],
+            "software like Aldus PageMaker including versions of Lorem Ipsum ",
             className="eight columns offset-by-two",
             style={
                 "text-align": "justify",
@@ -141,7 +141,7 @@ app.layout = html.Div([
                 },
             ),
         ],
-            className="six columns",
+            className="five columns offset-by-one",
         ),
 
         html.Div([
@@ -156,7 +156,7 @@ app.layout = html.Div([
                 },
             ),
         ],
-            className="six columns",
+            className="five columns",
         ),
     ],
         className="row",
