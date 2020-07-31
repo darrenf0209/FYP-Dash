@@ -7,6 +7,14 @@ import pandas as pd
 import os
 import glob
 
+# ---------------------------------------------------------------
+df = pd.read_csv("data\\merged.csv")
+df_mean = df.groupby(["Model", "Iteration"], as_index=False)[["PSNR", "Loss"]].mean()
+df_mean = df_mean[["Model", "Iteration", "PSNR", "Loss"]]
+
+
+# ---------------------------------------------------------------
+
 data_files = glob.glob("data\\*.csv")
 data_files = list(data_files)
 
@@ -203,7 +211,7 @@ app.layout = html.Div([
             dcc.Dropdown(
                 id='model-selector',
                 options=[{'label': i, 'value': i} for i in models],
-                value='Alternative',
+                value=['Alternative', 'Null'],
                 multi=True,
                 className="four columns",
             ),
@@ -248,32 +256,23 @@ def update_video(value):
     [Input('model-selector', 'value'),
      Input('metric-selector', 'value')])
 def update_graph(model_choice, metric):
-    # choice = [model_choice]
-    # data_load = []
-    # for i in range(0, len(choice)):
-    #     print(choice[i])
-    #     if models.index(choice[i]) is not None:
-    #         index = models.index(choice[i])
-    #         # print(data_files[index])
-    #         # print(index, type(index))
-    #         df = pd.read_csv(data_files[index])
-            # print(df['Iterations'])
-            # data_load.append(all_data[index])
+    graph_data = []
+    choices = list(model_choice)
 
-    # print(data_load)
-    # print(models)
-    # print(index)
-    # data_select = all_data[index]
-    graph = go.Scatter(
-        x=alt1_data['Iteration'],
-        y=alt1_data[metric],
-        name="{}".format(model_choice)
-    )
-    data = [graph]
-    layout = dict(title="Alternative 1", showlegend=True)
-    fig = dict(data=data, layout=layout)
+    print(len(choices))
+    for i in range(0, len(choices)):
+        print(choices[i])
+        model_selection = df_mean.loc[df_mean["Model"] == choices[i]]
+        graph = go.Scatter(
+            x=model_selection["Iteration"],
+            y=model_selection[metric],
+            # name="{}".format(model_choice[i]["Model"][0])
+        )
+        graph_data.append(graph)
+
+    layout = dict(title="Training Results", showlegend=True)
+    fig = dict(data=graph_data, layout=layout)
     return fig
-
 
 
 if __name__ == "__main__":
