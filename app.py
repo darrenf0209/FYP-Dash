@@ -5,22 +5,14 @@ from dash.dependencies import Output, Input
 import plotly.graph_objs as go
 import pandas as pd
 import os
-import glob
+
 
 # ---------------------------------------------------------------
 df = pd.read_csv("data\\merged.csv")
 df_mean = df.groupby(["Model", "Iteration"], as_index=False)[["PSNR", "Loss"]].mean()
 df_mean = df_mean[["Model", "Iteration", "PSNR", "Loss"]]
 
-
 # ---------------------------------------------------------------
-
-data_files = glob.glob("data\\*.csv")
-data_files = list(data_files)
-
-alt1_data = pd.read_csv("data\\alternative_1_20200527.csv")
-null1_data = pd.read_csv("data\\null_1_20200517.csv")
-all_data = [alt1_data, null1_data]
 
 video_dir_lr = "assets\\video_sequences\\low_res"
 video_dir_hr = "assets\\video_sequences\\high_res"
@@ -256,22 +248,35 @@ def update_video(value):
     [Input('model-selector', 'value'),
      Input('metric-selector', 'value')])
 def update_graph(model_choice, metric):
-    graph_data = []
+    fig = go.Figure()
     choices = list(model_choice)
-
-    print(len(choices))
     for i in range(0, len(choices)):
-        print(choices[i])
         model_selection = df_mean.loc[df_mean["Model"] == choices[i]]
-        graph = go.Scatter(
-            x=model_selection["Iteration"],
-            y=model_selection[metric],
-            # name="{}".format(model_choice[i]["Model"][0])
-        )
-        graph_data.append(graph)
+        fig.add_trace(
+            go.Scatter(
+                x=model_selection["Iteration"],
+                y=model_selection[metric],
+                name="{}".format(choices[i])
+            ))
 
-    layout = dict(title="Training Results", showlegend=True)
-    fig = dict(data=graph_data, layout=layout)
+    fig.update_layout(
+        title={
+            'text': "{} vs Iteration".format(metric),
+            'y': 0.9,
+            'x': 0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'
+        },
+        xaxis_title="Iteration",
+        yaxis_title="{}".format(metric),
+        legend_title="Model Names",
+        showlegend=True,
+        font=dict(
+            family="Century Schoolbook",
+            size=14
+        )
+    )
+
     return fig
 
 
