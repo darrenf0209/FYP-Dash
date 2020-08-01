@@ -6,11 +6,10 @@ import plotly.graph_objs as go
 import pandas as pd
 import os
 
-
 # ---------------------------------------------------------------
-df = pd.read_csv("data\\merged.csv")
-df_mean = df.groupby(["Model", "Iteration"], as_index=False)[["PSNR", "Loss"]].mean()
-df_mean = df_mean[["Model", "Iteration", "PSNR", "Loss"]]
+df = pd.read_csv("data\\training_data_merged.csv")
+df_mean = df.groupby(["Model", "Iteration"], as_index=False)[["PSNR", "Loss", "Training Time"]].mean()
+df_mean = df_mean[["Model", "Iteration", "PSNR", "Loss", "Training Time"]]
 
 # ---------------------------------------------------------------
 
@@ -19,8 +18,8 @@ video_dir_hr = "assets\\video_sequences\\high_res"
 videos_lr = [os.path.splitext(vid)[0] for vid in os.listdir(video_dir_lr)]
 videos_hr = [os.path.splitext(vid)[0] for vid in os.listdir(video_dir_hr)]
 
-models = ['Alternative', 'Null']
-metrics = ['PSNR', 'Loss']
+models = ['Alternative', 'Control (3)', 'Control (5)', 'Control (7)', 'Null']
+metrics = ['PSNR', 'Loss', 'Training Time']
 
 # Initialising the app
 app = dash.Dash(__name__, update_title=None)
@@ -197,23 +196,30 @@ app.layout = html.Div([
     ),
 
     html.Div([
-        html.H6("Model Select",
-                className="two columns offset-by-one"),
+        html.H6(
+            "Model Select",
+            className="two columns offset-by-one"
+        ),
         html.Div(
             dcc.Dropdown(
                 id='model-selector',
                 options=[{'label': i, 'value': i} for i in models],
                 value=['Alternative', 'Null'],
                 multi=True,
-                className="four columns",
+                className="five columns",
             ),
+        ),
+        html.H6(
+            "Metric",
+            className="one column"
+
         ),
         html.Div(
             dcc.Dropdown(
                 id='metric-selector',
                 options=[{'label': i, 'value': i} for i in metrics],
                 value='PSNR',
-                className="two columns offset-by-one",
+                className="two columns",
             ),
         ),
     ],
@@ -223,8 +229,6 @@ app.layout = html.Div([
     html.Div(
         dcc.Graph(
             id='training-results-scatter',
-            # id="Alt 1 Training",
-            # figure=fig,
             className="ten columns offset-by-one"
         ),
         className="row"
