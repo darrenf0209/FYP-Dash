@@ -15,8 +15,8 @@ df_mean = df_mean[["Model", "Iteration", "PSNR", "Loss", "Training Time"]]
 
 video_dir_lr = "assets\\video_sequences\\low_res"
 video_dir_hr = "assets\\video_sequences\\high_res"
-videos_lr = [os.path.splitext(vid)[0] for vid in os.listdir(video_dir_lr)]
-videos_hr = [os.path.splitext(vid)[0] for vid in os.listdir(video_dir_hr)]
+videos_lr = sorted([os.path.splitext(vid)[0] for vid in os.listdir(video_dir_lr)])
+videos_hr = sorted([os.path.splitext(vid)[0] for vid in os.listdir(video_dir_hr)])
 
 models = ['Alternative', 'Control (3)', 'Control (5)', 'Control (7)', 'Null']
 metrics = ['PSNR', 'Loss', 'Training Time']
@@ -59,7 +59,7 @@ app.layout = html.Div([
             className="two columns offset-by-one",
             style={
                 "text-align": "left"
-            }
+            },
         ),
         html.A([
             html.Img(
@@ -109,16 +109,51 @@ app.layout = html.Div([
 
     html.Div([
         dcc.Markdown(
-            "Lorem Ipsum is simply dummy **text** of the printing and typesetting industry. Lorem Ipsum has been the "
-            "industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and "
-            "scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap "
-            "into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the "
-            "release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing "
-            "software like Aldus PageMaker including versions of Lorem Ipsum ",
-            className="eight columns offset-by-two",
+
+            '''
+            
+            This dashboard is a snapshot of my Final-Year Project (Honours) in Electrical and Computer Systems 
+            Engineering at Monash University. This reseearch projects investigates if spatial information of a video 
+            frame is a more important factor than the temporal correlation across multiple frames. The motivation for 
+            this project is proposing a novel approach for applying video-super resolution with a causal network. 
+            This may lead to further real-time applications, such as teleconferencing or live video feeds, 
+            that can rely upon a deep-learning network for higher quality. With thanks to the original authors of the 
+            _Progressive Fusion Video Super-Resolution Network via Exploiting Non-Local Spatio-Temporal Correlations_ 
+            (PFNL) [research paper]
+            (https://openaccess.thecvf.com/content_ICCV_2019/html/Yi_Progressive_Fusion_Video_Super-Resolution_Network_via_Exploiting_Non-Local_Spatio-Temporal_Correlations_ICCV_2019_paper.html) 
+            and [github](https://github.com/psychopa4/PFNL) for laying the foundation of this project. 
+            
+            '''
+            ,
+            className="ten columns offset-by-one",
             style={
                 "text-align": "justify",
-                "text-justify": "inter-word"
+                "text-justify": "inter-word",
+                "font-size": "18px",
+                "padding": "0.5%"
+            },
+        ),
+    ],
+        className="row"
+    ),
+
+    html.Div([
+        dcc.Markdown(
+
+            ''' 
+            
+            You can view the source code for the [proposed network](https://github.com/darrenf0209/PFNL) written in 
+            TensorFlow or for this [dashboard] (https://github.com/darrenf0209/FYP-Dash) written with Dash. Thank you 
+            for exploring this exciting research and feel free to reach out with any questions. 
+
+            '''
+            ,
+            className="ten columns offset-by-one",
+            style={
+                "text-align": "justify",
+                "text-justify": "inter-word",
+                "font-size": "18px",
+                "padding": "0.5%"
             },
         ),
     ],
@@ -127,7 +162,8 @@ app.layout = html.Div([
 
     html.Div([
         html.H4('Visual Results of 2x Video Super-Resolution')
-    ]),
+    ],
+    ),
 
     html.Div([
         html.Div([
@@ -151,7 +187,8 @@ app.layout = html.Div([
         style={
             "padding-top": "0.5%",
             "padding-bottom": "0.5%"
-        }),
+        }
+    ),
 
     html.Div([
         html.Div([
