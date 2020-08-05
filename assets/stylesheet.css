@@ -18,6 +18,7 @@
 - Media Queries
 */
 
+
 /* Banner
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .banner {
@@ -194,6 +195,14 @@ a {
   cursor: pointer;}
 a:hover {
   color: #0FA0CE; }
+
+#header-links a{
+  color: black;
+  text-decoration: underline;
+  cursor: pointer;}
+#header-links a:hover {
+  color: gray; }
+
 
 
 /* Buttons
