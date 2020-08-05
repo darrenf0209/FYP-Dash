@@ -118,13 +118,13 @@ app.layout = html.Div([
             '''
             
             This dashboard is a snapshot of my Final-Year Project (Honours) in Electrical and Computer Systems 
-            Engineering at Monash University. This reseearch projects investigates if spatial information of a video 
-            frame is a more important factor than the temporal correlation across multiple frames. The motivation for 
-            this project is proposing a novel approach for applying video-super resolution with a causal network. 
-            This may lead to further real-time applications, such as teleconferencing or live video feeds, 
-            that can rely upon a deep-learning network for higher quality. With thanks to the original authors of the 
-            _Progressive Fusion Video Super-Resolution Network via Exploiting Non-Local Spatio-Temporal Correlations_ 
-            (PFNL) [research paper]
+            Engineering at Monash University in the field of deep learning and computer vision. This reseearch 
+            projects investigates if spatial information of a video frame is a more important factor than the 
+            temporal correlation across multiple frames. The motivation for this project is proposing a novel 
+            approach for applying video-super resolution with a causal network. This may lead to further real-time 
+            applications, such as teleconferencing or live video feeds, that can rely upon a deep-learning network 
+            for higher quality. With thanks to the original authors of the _Progressive Fusion Video Super-Resolution 
+            Network via Exploiting Non-Local Spatio-Temporal Correlations_ (PFNL) [research paper]
             (https://openaccess.thecvf.com/content_ICCV_2019/html/Yi_Progressive_Fusion_Video_Super-Resolution_Network_via_Exploiting_Non-Local_Spatio-Temporal_Correlations_ICCV_2019_paper.html) 
             and [github](https://github.com/psychopa4/PFNL) for laying the foundation of this project. 
             
@@ -168,22 +168,63 @@ app.layout = html.Div([
     ),
 
     html.Div([
-        html.Div([
-            "Video sequence",
-        ],
-            className="two columns offset-by-one",
+        dcc.Markdown(
+            ''' 
+            
+            With this supervised causal deep learning network, a video sequence can be doubled in size. The input is 
+            the downsampled and Gaussian blurred video frame which is passed into the network, and the output is the 
+            high resolution estimate. The model trains with sets of paired low-resolution and high-resolution short 
+            video sequences to determine the spatial and temporal relationships to produce the high-resolution 
+            estimate. A sample set of specific video sequences are presented below to demonstrate its effectiveness. 
+
+            ''',
+            className="ten columns offset-by-one",
+            style={
+                "text-align": "justify",
+                "text-justify": "inter-word",
+                "font-size": "18px",
+                "padding": "0.5%"
+            },
         ),
+    ],
+        className="row"
+    ),
+
+    html.Div([
+        html.H5(
+            "Please select a video sequence"
+                ),
         dcc.Dropdown(
             id='video-sequence-selector',
             options=[{'label': i, 'value': i} for i in videos_lr],
             value=videos_lr[0],
             clearable=False,
-            className="two columns",
-
+            className="four columns offset-by-four",
         ),
     ],
         className="row",
+        style={
+            "text-align": "center"
+        }
     ),
+
+    # html.Div([
+    #     html.Div([
+    #         "Video sequence",
+    #     ],
+    #         className="two columns offset-by-one",
+    #     ),
+    #     dcc.Dropdown(
+    #         id='video-sequence-selector',
+    #         options=[{'label': i, 'value': i} for i in videos_lr],
+    #         value=videos_lr[0],
+    #         clearable=False,
+    #         className="two columns",
+    #
+    #     ),
+    # ],
+    #     className="row",
+    # ),
 
     html.Div([
         html.Div([
@@ -301,34 +342,41 @@ app.layout = html.Div([
     ),
 
     html.Div([
-        html.H6(
-            "Model Select",
-            className="two columns offset-by-one",
+        html.H5(
+            "Select Model(s)",
+            className="five columns offset-by-one"
         ),
+        html.H5(
+            "Select A Metric",
+            className="five columns"
+        )
+    ],
+        className="row"
+    ),
+
+    html.Div([
         html.Div(
             dcc.Dropdown(
                 id='model-selector',
                 options=[{'label': i, 'value': i} for i in models],
                 value=['Alternative', 'Null'],
                 multi=True,
-                className="five columns",
+                className="five columns offset-by-one",
             ),
-        ),
-        html.H6(
-            "Metric",
-            className="one column",
-
         ),
         html.Div(
             dcc.Dropdown(
                 id='metric-selector',
                 options=[{'label': i, 'value': i} for i in metrics],
                 value='PSNR',
-                className="two columns",
+                className="two columns offset-by-two",
             ),
         ),
     ],
         className="row",
+        style={
+            "text-align": "center"
+        }
 
     ),
 
@@ -348,8 +396,8 @@ app.layout = html.Div([
     Output('video_hr', 'src')],
     [Input('video-sequence-selector', 'value')])
 def update_video(value):
-    src_lr = os.path.join(video_dir_lr, value + '.png')
-    src_hr = os.path.join(video_dir_hr, value + '.png')
+    src_lr = os.path.join(video_dir_lr, value + '.gif')
+    src_hr = os.path.join(video_dir_hr, value + '.gif')
     return src_lr, src_hr
 
 
@@ -383,7 +431,7 @@ def update_graph(model_choice, metric):
         showlegend=True,
         font=dict(
             family="Century Schoolbook",
-            size=14
+            size=16
         )
     )
 
