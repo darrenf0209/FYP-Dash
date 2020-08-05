@@ -88,11 +88,17 @@ app.layout = html.Div([
         ],
             href='https://github.com/darrenf0209'
         ),
-        html.H4(
-            "Supervisors: Dr. Titus Tang, Prof. Tom Drummond",
+        dcc.Markdown(
+            "Supervisors: [Dr. Titus Tang](https://scholar.google.com.au/citations?user=lBfZ9rgAAAAJ&hl=en), "
+            "[Prof. Tom Drummond](https://www.monash.edu/engineering/tomdrummond)",
             className="six columns offset-by-two",
+            id="header-links",
             style={
                 "text-align": "right",
+                "padding-right": "2%",
+                "font-size": "2.6rem",
+                "margin-bottom": "1.4rem",
+                "margin-top": "1.4rem"
             },
         ),
     ],
@@ -109,7 +115,6 @@ app.layout = html.Div([
 
     html.Div([
         dcc.Markdown(
-
             '''
             
             This dashboard is a snapshot of my Final-Year Project (Honours) in Electrical and Computer Systems 
@@ -123,8 +128,7 @@ app.layout = html.Div([
             (https://openaccess.thecvf.com/content_ICCV_2019/html/Yi_Progressive_Fusion_Video_Super-Resolution_Network_via_Exploiting_Non-Local_Spatio-Temporal_Correlations_ICCV_2019_paper.html) 
             and [github](https://github.com/psychopa4/PFNL) for laying the foundation of this project. 
             
-            '''
-            ,
+            ''',
             className="ten columns offset-by-one",
             style={
                 "text-align": "justify",
@@ -139,15 +143,13 @@ app.layout = html.Div([
 
     html.Div([
         dcc.Markdown(
-
             ''' 
             
-            You can view the source code for the [proposed network](https://github.com/darrenf0209/PFNL) written in 
+            You can view the source code for the [proposed network](https://github.com/darrenf0209/PFNL) written using 
             TensorFlow or for this [dashboard] (https://github.com/darrenf0209/FYP-Dash) written with Dash. Thank you 
             for exploring this exciting research and feel free to reach out with any questions. 
 
-            '''
-            ,
+            ''',
             className="ten columns offset-by-one",
             style={
                 "text-align": "justify",
@@ -170,10 +172,6 @@ app.layout = html.Div([
             "Video sequence",
         ],
             className="two columns offset-by-one",
-            style={
-                "padding-top": "0.5%",
-                "padding-left": "3%"
-            }
         ),
         dcc.Dropdown(
             id='video-sequence-selector',
@@ -181,18 +179,15 @@ app.layout = html.Div([
             value=videos_lr[0],
             clearable=False,
             className="two columns",
+
         ),
     ],
         className="row",
-        style={
-            "padding-top": "0.5%",
-            "padding-bottom": "0.5%"
-        }
     ),
 
     html.Div([
         html.Div([
-            html.H4(
+            html.H5(
                 "Input",
             ),
             html.Img(
@@ -207,7 +202,7 @@ app.layout = html.Div([
         ),
 
         html.Div([
-            html.H4(
+            html.H5(
                 "Output",
             ),
             html.Img(
@@ -228,14 +223,87 @@ app.layout = html.Div([
     ),
 
     html.Div([
+        dcc.Markdown(
+            '''
+
+            The above video sequences are generated with the _Alternative_ proposed model from this research. It is a 
+            causal network which utilises a previous high-resolution frame and the current low-resolution frame. A 
+            visual representation of the network utilising this approach is shown below. For GPU limitations, 
+            only upscaling video sequences by two is considered. 
+
+            ''',
+            className="ten columns offset-by-one",
+            style={
+                "text-align": "justify",
+                "text-justify": "inter-word",
+                "font-size": "18px",
+                "padding": "0.5%"
+            },
+        ),
+    ],
+        className="row"
+    ),
+
+    html.Div([
+        html.Div([
+            html.H5(
+                "Alternative Proposed Network (5 input frames)",
+            ),
+            html.Img(
+                src="assets\\alternative_proposed_network.PNG",
+                style={
+                    "width": "100%",
+                    "height": "auto"
+                },
+            ),
+        ],
+            className="eight columns offset-by-two",
+        ),
+    ],
+        className="row",
+        style={
+            "text-align": "center"
+        },
+    ),
+
+    html.Div([
         html.H4("Model Training Results")
     ],
     ),
 
     html.Div([
+        dcc.Markdown(
+            '''
+            
+            Several models were trained and evaluated throughout this research project. The _Alternative_ and _Null_ 
+            were the primary models for investigating the impact of extracting different degrees of spatial 
+            information. While the _Alternative_ model utilised a high-resolution frame, the _Null_ model did not. 
+            The _Alternative_ slightly outperformed from the experiments undertaken, but did require longer training 
+            times. Both of these models are causal systems. As a benchmark for this research investigation, 
+            the original network, modified for 2x video super-resolution, were tested with varying input frames. 
+            These are the _Control_ models which can also be compared below, with either 3, 5 or 7 input frames. The 
+            _Control_ models utilise frames from the future and hence are not causal systems, making them 
+            inapplicable to real-time applications. They do, however, greatly outperform the causal systems 
+            investigated by the _Null_ and _Alternative_. The data shown is the average of three identically trained 
+            models. 
+    
+            ''',
+            className="ten columns offset-by-one",
+            style={
+                "text-align": "justify",
+                "text-justify": "inter-word",
+                "font-size": "18px",
+                "padding": "0.5%"
+            },
+        ),
+    ],
+        className="row"
+    ),
+
+    html.Div([
         html.H6(
             "Model Select",
-            className="two columns offset-by-one"
+            className="two columns offset-by-one",
         ),
         html.Div(
             dcc.Dropdown(
@@ -248,7 +316,7 @@ app.layout = html.Div([
         ),
         html.H6(
             "Metric",
-            className="one column"
+            className="one column",
 
         ),
         html.Div(
@@ -260,7 +328,8 @@ app.layout = html.Div([
             ),
         ),
     ],
-        className="row"
+        className="row",
+
     ),
 
     html.Div(
