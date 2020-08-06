@@ -7,14 +7,14 @@ import pandas as pd
 import os
 
 # ---------------------------------------------------------------
-df = pd.read_csv("data\\training_data_merged.csv")
+df = pd.read_csv("data/training_data_merged.csv")
 df_mean = df.groupby(["Model", "Iteration"], as_index=False)[["PSNR", "Loss", "Training Time (s)"]].mean()
 df_mean = df_mean[["Model", "Iteration", "PSNR", "Loss", "Training Time (s)"]]
 
 # ---------------------------------------------------------------
 
-video_dir_lr = "assets\\video_sequences\\low_res"
-video_dir_hr = "assets\\video_sequences\\high_res"
+video_dir_lr = "assets/video_sequences/low_res"
+video_dir_hr = "assets/video_sequences/high_res"
 videos_lr = sorted([os.path.splitext(vid)[0] for vid in os.listdir(video_dir_lr)])
 videos_hr = sorted([os.path.splitext(vid)[0] for vid in os.listdir(video_dir_hr)])
 
@@ -273,7 +273,7 @@ app.layout = html.Div([
                 "Alternative Proposed Network (5 input frames)",
             ),
             html.Img(
-                src="assets\\alternative_proposed_network.PNG",
+                src="assets/alternative_proposed_network.PNG",
                 style={
                     "width": "100%",
                     "height": "auto"
@@ -421,4 +421,4 @@ def update_graph(model_choice, metric):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=False)
+    app.run_server(debug=True)
