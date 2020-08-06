@@ -8,8 +8,8 @@ import os
 
 # ---------------------------------------------------------------
 df = pd.read_csv("data\\training_data_merged.csv")
-df_mean = df.groupby(["Model", "Iteration"], as_index=False)[["PSNR", "Loss", "Training Time"]].mean()
-df_mean = df_mean[["Model", "Iteration", "PSNR", "Loss", "Training Time"]]
+df_mean = df.groupby(["Model", "Iteration"], as_index=False)[["PSNR", "Loss", "Training Time (s)"]].mean()
+df_mean = df_mean[["Model", "Iteration", "PSNR", "Loss", "Training Time (s)"]]
 
 # ---------------------------------------------------------------
 
@@ -18,8 +18,8 @@ video_dir_hr = "assets\\video_sequences\\high_res"
 videos_lr = sorted([os.path.splitext(vid)[0] for vid in os.listdir(video_dir_lr)])
 videos_hr = sorted([os.path.splitext(vid)[0] for vid in os.listdir(video_dir_hr)])
 
-models = ['Alternative', 'Control (3)', 'Control (5)', 'Control (7)', 'Null']
-metrics = ['PSNR', 'Loss', 'Training Time']
+models = ('Alternative', 'Control (3)', 'Control (5)', 'Control (7)', 'Null')
+metrics = ('PSNR', 'Loss', 'Training Time (s)')
 
 # Initialising the app
 app = dash.Dash(__name__, update_title=None)
@@ -90,7 +90,7 @@ app.layout = html.Div([
         ),
         dcc.Markdown(
             "Supervisors: [Dr. Titus Tang](https://scholar.google.com.au/citations?user=lBfZ9rgAAAAJ&hl=en), "
-            "[Prof. Tom Drummond](https://www.monash.edu/engineering/tomdrummond)",
+            "[Prof. Tom Drummond](https://scholar.google.com.au/citations?user=6sWGL5wAAAAJ&hl=en)",
             className="six columns offset-by-two",
             id="header-links",
             style={
@@ -118,10 +118,10 @@ app.layout = html.Div([
             '''
             
             This dashboard is a snapshot of my Final-Year Project (Honours) in Electrical and Computer Systems 
-            Engineering at Monash University in the field of deep learning and computer vision. This reseearch 
-            projects investigates if spatial information of a video frame is a more important factor than the 
+            Engineering at Monash University in the field of deep learning and computer vision. This research 
+            project investigates if spatial information of a video frame is a more important factor than the 
             temporal correlation across multiple frames. The motivation for this project is proposing a novel 
-            approach for applying video-super resolution with a causal network. This may lead to further real-time 
+            approach for applying video-super resolution with a causal network. This may lead to real-time 
             applications, such as teleconferencing or live video feeds, that can rely upon a deep-learning network 
             for higher quality. With thanks to the original authors of the _Progressive Fusion Video Super-Resolution 
             Network via Exploiting Non-Local Spatio-Temporal Correlations_ (PFNL) [research paper]
@@ -145,8 +145,8 @@ app.layout = html.Div([
         dcc.Markdown(
             ''' 
             
-            You can view the source code for the [proposed network](https://github.com/darrenf0209/PFNL) written using 
-            TensorFlow or for this [dashboard] (https://github.com/darrenf0209/FYP-Dash) written with Dash. Thank you 
+            You can view the source code for the [proposed network](https://github.com/darrenf0209/PFNL), written using 
+            TensorFlow, or for this [dashboard] (https://github.com/darrenf0209/FYP-Dash), written using Dash. Thank you 
             for exploring this exciting research and feel free to reach out with any questions. 
 
             ''',
@@ -171,11 +171,10 @@ app.layout = html.Div([
         dcc.Markdown(
             ''' 
             
-            With this supervised causal deep learning network, a video sequence can be doubled in size. The input is 
-            the downsampled and Gaussian blurred video frame which is passed into the network, and the output is the 
-            high resolution estimate. The model trains with sets of paired low-resolution and high-resolution short 
-            video sequences to determine the spatial and temporal relationships to produce the high-resolution 
-            estimate. A sample set of specific video sequences are presented below to demonstrate its effectiveness. 
+            With this supervised causal deep learning network, a video sequence can be doubled in size. The input 
+            video frame to the network is downsampled and Gaussian blurred, and the output is the high resolution 
+            estimate. The model trains with more than 500 low-resolution and high-resolution short video sequence 
+            pairs. A sample of testing video sequences are presented below to demonstrate its effectiveness. 
 
             ''',
             className="ten columns offset-by-one",
@@ -207,24 +206,6 @@ app.layout = html.Div([
             "text-align": "center"
         }
     ),
-
-    # html.Div([
-    #     html.Div([
-    #         "Video sequence",
-    #     ],
-    #         className="two columns offset-by-one",
-    #     ),
-    #     dcc.Dropdown(
-    #         id='video-sequence-selector',
-    #         options=[{'label': i, 'value': i} for i in videos_lr],
-    #         value=videos_lr[0],
-    #         clearable=False,
-    #         className="two columns",
-    #
-    #     ),
-    # ],
-    #     className="row",
-    # ),
 
     html.Div([
         html.Div([
