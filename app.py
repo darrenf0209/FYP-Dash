@@ -23,6 +23,7 @@ metrics = ('PSNR', 'Loss', 'Training Time (s)')
 
 # Initialising the app
 app = dash.Dash(__name__, update_title=None)
+server = app.server
 
 # Container of div and html elements
 app.layout = html.Div([
@@ -420,4 +421,4 @@ def update_graph(model_choice, metric):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run_server(debug=False)
