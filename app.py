@@ -27,7 +27,7 @@ server = flask.Flask(__name__)
 
 @server.route('/')
 def index():
-    return 'Hello World'
+    return app
 
 
 # Initialising the app
