@@ -24,9 +24,11 @@ metrics = ('PSNR', 'Loss', 'Training Time (s)')
 
 server = flask.Flask(__name__)
 
+
 @server.route('/')
 def index():
     return 'Hello World'
+
 
 # Initialising the app
 app = dash.Dash(
@@ -207,7 +209,7 @@ app.layout = html.Div([
     html.Div([
         html.H5(
             "Please select a video sequence"
-                ),
+        ),
         dcc.Dropdown(
             id='video-sequence-selector',
             options=[{'label': i, 'value': i} for i in videos_lr],
