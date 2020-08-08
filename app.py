@@ -5,7 +5,8 @@ from dash.dependencies import Output, Input
 import plotly.graph_objs as go
 import pandas as pd
 import os
-import flask
+
+# import flask
 
 # ---------------------------------------------------------------
 df = pd.read_csv("data/training_data_merged.csv")
@@ -23,18 +24,16 @@ models = ('Alternative', 'Control (3)', 'Control (5)', 'Control (7)', 'Null')
 metrics = ('PSNR', 'Loss', 'Training Time (s)')
 
 # server = flask.Flask(__name__)
-#
-#
+
 # @server.route('/')
 # def index():
-#     return app
-
+#     return 'Hello World'
 
 # Initialising the app
 app = dash.Dash(
     __name__,
     # server=server,
-    # routes_pathname_prefix='/fyp-darrenf/',
+    # routes_pathname_prefix='/dash/',
     update_title=None
 )
 server = app.server
@@ -133,7 +132,7 @@ app.layout = html.Div([
     html.Div([
         dcc.Markdown(
             '''
-            
+
             This dashboard is a snapshot of my Final-Year Project (Honours) in Electrical and Computer Systems 
             Engineering at Monash University in the field of deep learning and computer vision. This research 
             project investigates if spatial information of a video frame is a more important factor than the 
@@ -144,7 +143,7 @@ app.layout = html.Div([
             Network via Exploiting Non-Local Spatio-Temporal Correlations_ (PFNL) [research paper]
             (https://openaccess.thecvf.com/content_ICCV_2019/html/Yi_Progressive_Fusion_Video_Super-Resolution_Network_via_Exploiting_Non-Local_Spatio-Temporal_Correlations_ICCV_2019_paper.html) 
             and [github](https://github.com/psychopa4/PFNL) for laying the foundation of this project. 
-            
+
             ''',
             className="ten columns offset-by-one",
             style={
@@ -161,7 +160,7 @@ app.layout = html.Div([
     html.Div([
         dcc.Markdown(
             ''' 
-            
+
             You can view the source code for the [proposed network](https://github.com/darrenf0209/PFNL), written using 
             TensorFlow, or for this [dashboard] (https://github.com/darrenf0209/FYP-Dash), written using Dash. Thank you 
             for exploring this exciting research and feel free to reach out with any questions. 
@@ -187,7 +186,7 @@ app.layout = html.Div([
     html.Div([
         dcc.Markdown(
             ''' 
-            
+
             With this supervised causal deep learning network, a video sequence can be doubled in size. The input 
             video frame to the network is downsampled and Gaussian blurred, and the output is the high resolution 
             estimate. The model trains with more than 500 low-resolution and high-resolution short video sequence 
@@ -316,7 +315,7 @@ app.layout = html.Div([
     html.Div([
         dcc.Markdown(
             '''
-            
+
             Several models were trained and evaluated throughout this research project. The _Alternative_ and _Null_ 
             were the primary models for investigating the impact of extracting different degrees of spatial 
             information. While the _Alternative_ model utilised a high-resolution frame, the _Null_ model did not. 
@@ -328,7 +327,7 @@ app.layout = html.Div([
             inapplicable to real-time applications. They do, however, greatly outperform the causal systems 
             investigated by the _Null_ and _Alternative_. The data shown is the average of three identically trained 
             models. 
-    
+
             ''',
             className="ten columns offset-by-one",
             style={
