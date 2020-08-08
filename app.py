@@ -34,7 +34,7 @@ metrics = ('PSNR', 'Loss', 'Training Time (s)')
 app = dash.Dash(
     __name__,
     # server=server,
-    routes_pathname_prefix='/dash/',
+    # routes_pathname_prefix='/fyp-darrenf/',
     update_title=None
 )
 server = app.server

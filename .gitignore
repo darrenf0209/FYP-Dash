@@ -7,6 +7,7 @@ __pycache__/
 # Environments
 .env
 .venv
+.FYP-Dash
 
 # Misc file extensions
 .idea/*
