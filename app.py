@@ -5,6 +5,7 @@ from dash.dependencies import Output, Input
 import plotly.graph_objs as go
 import pandas as pd
 import os
+import flask
 
 # ---------------------------------------------------------------
 df = pd.read_csv("data/training_data_merged.csv")
@@ -21,9 +22,22 @@ videos_hr = sorted([os.path.splitext(vid)[0] for vid in os.listdir(video_dir_hr)
 models = ('Alternative', 'Control (3)', 'Control (5)', 'Control (7)', 'Null')
 metrics = ('PSNR', 'Loss', 'Training Time (s)')
 
+server = flask.Flask(__name__)
+
+@server.route('/')
+def index():
+    return 'Hello World'
+
 # Initialising the app
-app = dash.Dash(__name__, update_title=None)
-server = app.server
+app = dash.Dash(
+    __name__,
+    server=server,
+    routes_pathname_prefix='/dash/',
+    update_title=None
+)
+# server = app.server
+
+app.title = "Darren's FYP"
 
 # Container of div and html elements
 app.layout = html.Div([
