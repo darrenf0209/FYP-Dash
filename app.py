@@ -22,22 +22,22 @@ videos_hr = sorted([os.path.splitext(vid)[0] for vid in os.listdir(video_dir_hr)
 models = ('Alternative', 'Control (3)', 'Control (5)', 'Control (7)', 'Null')
 metrics = ('PSNR', 'Loss', 'Training Time (s)')
 
-server = flask.Flask(__name__)
-
-
-@server.route('/')
-def index():
-    return app
+# server = flask.Flask(__name__)
+#
+#
+# @server.route('/')
+# def index():
+#     return app
 
 
 # Initialising the app
 app = dash.Dash(
     __name__,
-    server=server,
+    # server=server,
     routes_pathname_prefix='/dash/',
     update_title=None
 )
-# server = app.server
+server = app.server
 
 app.title = "Darren's FYP"
 
@@ -440,4 +440,4 @@ def update_graph(model_choice, metric):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run_server(debug=False)
