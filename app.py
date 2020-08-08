@@ -149,7 +149,7 @@ app.layout = html.Div([
                 "text-align": "justify",
                 "text-justify": "inter-word",
                 "font-size": "18px",
-                "padding": "0.5%"
+                "padding-bottom": "1.5%"
             },
         ),
     ],
@@ -170,7 +170,7 @@ app.layout = html.Div([
                 "text-align": "justify",
                 "text-justify": "inter-word",
                 "font-size": "18px",
-                "padding": "0.5%"
+                "padding-bottom": "1.5%"
             },
         ),
     ],
@@ -197,7 +197,7 @@ app.layout = html.Div([
                 "text-align": "justify",
                 "text-justify": "inter-word",
                 "font-size": "18px",
-                "padding": "0.5%"
+                "padding-bottom": "1.5%"
             },
         ),
     ],
@@ -218,7 +218,8 @@ app.layout = html.Div([
     ],
         className="row",
         style={
-            "text-align": "center"
+            "text-align": "center",
+            "padding-bottom": "1.5%"
         }
     ),
 
@@ -255,7 +256,8 @@ app.layout = html.Div([
     ],
         className="row",
         style={
-            "text-align": "center"
+            "text-align": "center",
+            "padding-bottom": "1.5%"
         },
     ),
 
@@ -274,7 +276,7 @@ app.layout = html.Div([
                 "text-align": "justify",
                 "text-justify": "inter-word",
                 "font-size": "18px",
-                "padding": "0.5%"
+                "padding-bottom": "1.5%"
             },
         ),
     ],
@@ -290,7 +292,8 @@ app.layout = html.Div([
                 src="assets/alternative_proposed_network.PNG",
                 style={
                     "width": "100%",
-                    "height": "auto"
+                    "height": "auto",
+                    "padding-bottom": "1.5%"
                 },
             ),
         ],
@@ -330,7 +333,7 @@ app.layout = html.Div([
                 "text-align": "justify",
                 "text-justify": "inter-word",
                 "font-size": "18px",
-                "padding": "0.5%"
+                "padding-bottom": "1.5%"
             },
         ),
     ],
