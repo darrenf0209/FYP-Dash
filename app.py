@@ -13,8 +13,8 @@ df_mean = df_mean[["Model", "Iteration", "PSNR", "Loss", "Training Time (s)"]]
 
 # ---------------------------------------------------------------
 
-video_dir_lr = "assets/video_sequences/low_res"
-video_dir_hr = "assets/video_sequences/high_res"
+video_dir_lr = "assets/video_sequences/low_res_compressed"
+video_dir_hr = "assets/video_sequences/high_res_compressed"
 videos_lr = sorted([os.path.splitext(vid)[0] for vid in os.listdir(video_dir_lr)])
 videos_hr = sorted([os.path.splitext(vid)[0] for vid in os.listdir(video_dir_hr)])
 

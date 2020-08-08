@@ -10,3 +10,7 @@ __pycache__/
 
 # Misc file extensions
 .idea/*
+
+# Archive
+archive
+archive/*
