@@ -440,4 +440,4 @@ def update_graph(model_choice, metric):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=False)
+    app.run_server(debug=True)
