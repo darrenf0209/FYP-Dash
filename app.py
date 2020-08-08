@@ -32,19 +32,19 @@ app.layout = html.Div([
     html.Div([
         html.H3(
             "Supervised Causal Video Super-Resolution",
-            className="eight columns offset-by-one",
+            className="six columns offset-by-three",
             style={
-                "text-align": "left"
+                "text-align": "center",
+                "font-weight": "bold",
             },
         ),
         html.Img(
             src="assets/logos/Monash-University-Logo.png",
-            className="two columns",
+            className="three columns",
             style={
-                "height": "50px",
+                "height": "40px",
                 "width": "auto",
-                "margin-top": "1%",
-                "text-align": "right"
+                "margin-top": "2%",
             },
         ),
     ],
@@ -55,7 +55,7 @@ app.layout = html.Div([
     ),
 
     html.Div([
-        html.H4(
+        html.H5(
             "Darren Flaks",
             className="two columns offset-by-one",
             style={
@@ -64,11 +64,11 @@ app.layout = html.Div([
         ),
         html.A([
             html.Img(
-                src="assets/logos/linked_in_logo.png",
+                src="assets/logos/linkedin-logo.png",
                 className="one column",
                 style={
                     "width": "auto",
-                    "height": "40px",
+                    "height": "30px",
                     "margin-top": "1.25%",
                     "margin-right": "1%",
                 },
@@ -82,7 +82,7 @@ app.layout = html.Div([
                 className="one column",
                 style={
                     "width": "auto",
-                    "height": "40px",
+                    "height": "30px",
                     "margin-top": "1.25%",
                 },
             ),
@@ -97,7 +97,7 @@ app.layout = html.Div([
             style={
                 "text-align": "right",
                 "padding-right": "2%",
-                "font-size": "2.6rem",
+                "font-size": "2.2rem",
                 "margin-bottom": "1.4rem",
                 "margin-top": "1.4rem"
             },
@@ -329,7 +329,7 @@ app.layout = html.Div([
             className="five columns offset-by-one"
         ),
         html.H5(
-            "Select A Metric",
+            "Select Metric",
             className="five columns"
         )
     ],
