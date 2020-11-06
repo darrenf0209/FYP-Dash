@@ -6,28 +6,25 @@ import plotly.graph_objs as go
 import pandas as pd
 import os
 
-# import flask
-
+## Data used for plotting ##
 # ---------------------------------------------------------------
 df = pd.read_csv("data/training_data_merged.csv")
+# Retrieve mean of PSNR, Loss and Training time for each distinguished model
 df_mean = df.groupby(["Model", "Iteration"], as_index=False)[["PSNR", "Loss", "Training Time (s)"]].mean()
+# Exclude selection to data that will be plotted
 df_mean = df_mean[["Model", "Iteration", "PSNR", "Loss", "Training Time (s)"]]
-
 # ---------------------------------------------------------------
 
+# gif directory paths
 video_dir_lr = "assets/video_sequences/low_res_compressed"
 video_dir_hr = "assets/video_sequences/high_res_compressed"
 videos_lr = sorted([os.path.splitext(vid)[0] for vid in os.listdir(video_dir_lr)])
 videos_hr = sorted([os.path.splitext(vid)[0] for vid in os.listdir(video_dir_hr)])
 
+# Variables to cycle during selection
 models = ('Alternative', 'Control (3)', 'Control (5)', 'Control (7)', 'Null')
 metrics = ('PSNR', 'Loss', 'Training Time (s)')
 
-# server = flask.Flask(__name__)
-
-# @server.route('/')
-# def index():
-#     return 'Hello World'
 
 # Initialising the app
 app = dash.Dash(
@@ -38,6 +35,7 @@ app = dash.Dash(
 )
 server = app.server
 
+# Title page
 app.title = "Darren's FYP"
 
 # Container of div and html elements
@@ -123,7 +121,7 @@ app.layout = html.Div([
             "background-color": "#dcdddf"
         },
     ),
-
+    # Project synopsis
     html.Div([
         html.H4('Project Synposis')
     ],
@@ -177,7 +175,7 @@ app.layout = html.Div([
     ],
         className="row"
     ),
-
+    # Visual results comparison
     html.Div([
         html.H4('Visual Results of 2x Video Super-Resolution')
     ],
@@ -204,7 +202,7 @@ app.layout = html.Div([
     ],
         className="row"
     ),
-
+    # Video selector
     html.Div([
         html.H5(
             "Please select a video sequence"
@@ -283,7 +281,7 @@ app.layout = html.Div([
     ],
         className="row"
     ),
-
+    # Neural network architecture used
     html.Div([
         html.Div([
             html.H5(
@@ -353,7 +351,7 @@ app.layout = html.Div([
     ],
         className="row"
     ),
-
+    # Model and metric selector of training results
     html.Div([
         html.Div(
             dcc.Dropdown(
@@ -390,7 +388,7 @@ app.layout = html.Div([
 ],
 )
 
-
+# Enable the user to select a video sequence to compare input and output to the network
 @app.callback([
     Output('video_lr', 'src'),
     Output('video_hr', 'src')],
@@ -400,11 +398,12 @@ def update_video(value):
     src_hr = os.path.join(video_dir_hr, value + '.gif')
     return src_lr, src_hr
 
-
+# Enable the user to select and compare training results according to their chosen models and metric
 @app.callback(
     Output('training-results-scatter', 'figure'),
     [Input('model-selector', 'value'),
      Input('metric-selector', 'value')])
+# Update graph based on selections
 def update_graph(model_choice, metric):
     fig = go.Figure()
     choices = list(model_choice)
